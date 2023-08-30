@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 
 const esquemaOrden = mongoose.Schema({
+    descripcion: {
+        type: String,
+        required: true
+    },
     ejecutores: {
         type: Array,
         required: true
-    },
-    fechaInicio: {
-        type: Date,
-        required: false
-    },    
+    },   
     fechaEjecucion: {
         type: Date,
         required: false
@@ -19,7 +19,7 @@ const esquemaOrden = mongoose.Schema({
     },
     estado: {
         type: String,
-        enum: ["Iniciada", "Programada", "Completada", "Cancelada"],
+        enum: ["Programada", "Completada", "Cancelada"],
         required: true
     }
 
