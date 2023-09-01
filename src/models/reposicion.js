@@ -8,7 +8,7 @@ const Reposicion = mongoose.Schema({
     },
     cantidadAgregada: {
         type: Number,
-        required: true
+        required: false
     },
 }, { versionKey: false })
 
