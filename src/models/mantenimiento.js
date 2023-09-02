@@ -8,29 +8,22 @@ const TareaMantenimiento = mongoose.Schema({
     },
     estado: {
         type: String,
-        enum: ["Programada", "Completada", "Cancelada"] 
+        enum: ["Programada", "Completada", "Cancelada"],
+        required: true
+    },
+    comentarios: {
+        type: String,
+        required: false,
+        maxLength: 512
+    },
+    ejecutores: {
+        type: Array,
+        required: true
     }
 }, { versionKey: false })
 
-const Mantenimiento = mongoose.Schema({
-    unidad: {
-        type: String,
-        enum: ["Días", "Semanas", "Meses", "Años"],
-        required: true
-    },
-    intervalo: {
-        type: Number,
-        required: true
-    },
-    tareas: [TareaMantenimiento],
-    desde: {
-        type: Date,
-        required: true
-    },
-    hasta: {
-        type: Date,
-        required: true
-    }
+const Mantenimiento = mongoose.Schema({    
+    tareas: [TareaMantenimiento]
 }, { versionKey: false })
 
 module.exports = Orden.discriminator('Mantenimiento', Mantenimiento)
