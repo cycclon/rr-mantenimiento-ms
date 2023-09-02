@@ -1,8 +1,9 @@
 const express = require("express")
 const Reposicion = require('../models/reposicion')
 const router = express.Router()
+const { validarAutorizacion, validarNivel } = require('../utilities/utilidades')
 
-router.post('/registrar', async (req, res)=>{
+router.post('/registrar', validarAutorizacion, validarNivel(3), async (req, res)=>{
   const partesFecha = req.body.fechaEjecucion.split('/')
 
     try {

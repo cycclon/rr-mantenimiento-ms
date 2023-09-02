@@ -1,8 +1,9 @@
 const express = require("express")
 const Reparacion = require('../models/reparacion')
 const router = express.Router()
+const { validarAutorizacion, validarNivel } = require('../utilities/utilidades')
 
-router.post('/registrar', async (req, res)=>{
+router.post('/registrar', validarAutorizacion, validarNivel(2), async (req, res)=>{
   const partesFecha = req.body.fechaEjecucion.split('/')
 
     try {

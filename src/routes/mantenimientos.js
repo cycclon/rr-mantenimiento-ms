@@ -1,29 +1,30 @@
 const express = require("express")
 const Mantenimiento = require('../models/mantenimiento')
 const router = express.Router()
+const { validarAutorizacion, validarNivel } = require('../utilities/utilidades')
 
-router.post('/registrar', async (req, res)=>{
+router.post('/registrar', validarAutorizacion, validarNivel(2), async (req, res)=>{
   const partesFecha = req.body.fechaEjecucion.split('/')
 
     try {
-      const mantenimiento = new Mantenimiento({
-        idRecurso: req.body.idRecurso,
-        descripcion: req.body.descripcion,
-        ejecutores: req.body.ejecutores,
-        fechaEjecucion: new Date(+partesFecha[2], partesFecha[1]-1, +partesFecha[0]),
-        estado: "Programada",        
-        tareas: crearTareas(
-            req.body.fechaEjecucion, 
-            req.body.hasta, 
-            req.body.unidad, 
-            req.body.intervalo,
-            req.body.ejecutores)
-      })
+        const mantenimiento = new Mantenimiento({
+            idRecurso: req.body.idRecurso,
+            descripcion: req.body.descripcion,
+            ejecutores: req.body.ejecutores,
+            fechaEjecucion: new Date(+partesFecha[2], partesFecha[1]-1, +partesFecha[0]),
+            estado: "Programada",        
+            tareas: crearTareas(
+                req.body.fechaEjecucion, 
+                req.body.hasta, 
+                req.body.unidad, 
+                req.body.intervalo,
+                req.body.ejecutores)
+        })
 
-      const mantenimientoRegistrado = await mantenimiento.save()
-      return res.status(200).json(mantenimientoRegistrado)
+        const mantenimientoRegistrado = await mantenimiento.save()
+        return res.status(200).json(mantenimientoRegistrado)
     } catch (error) {
-      return res.status(200).json({ mensaje: error.message })
+        return res.status(200).json({ mensaje: error.message })
     }
 })
 
