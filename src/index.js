@@ -11,7 +11,7 @@ const ReparacionesRouter = require('./routes/reparaciones')
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-mongoose.connect(process.env.DB_URL);
+mongoose.connect(process.env.DB_URL + "mantenimiento?authSource=admin");
 const db = mongoose.connection;
 
 db.on('error', (error)=> console.log(error));
